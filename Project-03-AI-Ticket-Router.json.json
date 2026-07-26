@@ -1,0 +1,302 @@
+{
+  "name": "Project 3 - AI Ticket Router",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ai-ticket",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1152,
+        -320
+      ],
+      "id": "dd164aea-afd2-4b9d-b789-4d8aaef55ef5",
+      "name": "Webhook",
+      "webhookId": "463a0ac8-1811-4322-879a-3fd518cf73e1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a12aa8b9-2c91-4d64-8f4c-d8b4311f699f",
+              "name": "=CustomerName",
+              "value": "={{$json.body.CustomerName}}",
+              "type": "string"
+            },
+            {
+              "id": "9ecb2af6-03b7-45da-8c52-808b38ab4313",
+              "name": "Email",
+              "value": "={{$json.body.Email}}",
+              "type": "string"
+            },
+            {
+              "id": "4d12a093-9e1a-4621-acd6-394f84f11cb9",
+              "name": "Issue",
+              "value": "={{$json.body.issue}}",
+              "type": "string"
+            },
+            {
+              "id": "5d231b4d-e4a4-4040-b9f2-23c576ae7470",
+              "name": "Priority",
+              "value": "={{$json.body.Priority}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -848,
+        -320
+      ],
+      "id": "05edb947-083c-4791-8cee-89f2dc71273a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{$json.Issue}}",
+                    "rightValue": "Refund Request",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "ba70ddf7-a2d6-46d2-8967-ceb9f67fce41"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "be1d38ec-be3b-41e2-a6ff-f0453262b172",
+                    "leftValue": "={{$json.Issue}}",
+                    "rightValue": "Technical Issue",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "2ebaf987-61f3-4650-aabc-e595c4577326",
+                    "leftValue": "={{$json.Issue}}",
+                    "rightValue": "Payment Issue",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "a36a595b-b800-4ec3-a8e1-fa9b2de3b0c6",
+                    "leftValue": "={{$json.Issue}}",
+                    "rightValue": "Account Issue",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -608,
+        -352
+      ],
+      "id": "00fec108-ef6e-44a0-b717-41ed316fff03",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "17-11C6bzR07JqXdyi1u1W-JK3p9Q_HGyJyeMOSNahuI",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "CustomerName",
+              "displayName": "CustomerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Issue",
+              "displayName": "Issue",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -352,
+        -368
+      ],
+      "id": "cc81d04d-2d60-41ad-9b96-cb2f02ebed46",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleApi": {
+          "id": "ta7ulGd5H5UkP0CV",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "57e77796-5d17-4d32-ab77-36f59fc5aaf1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "388594768cda9628d288e759936b257db188b4bdb5b2d4d1d67ecf434608a591"
+  },
+  "nodeGroups": [],
+  "id": "vkIurIXGaR9DJKuy",
+  "tags": []
+}
